@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.homepage.mapper.loginMapper">
+	<select id="selectMembers" parameterType="String" resultType="com.homepage.login.dto.MemberDto">
+		SELECT user_no,
+			   user_id,
+			   AES_DECRYPT(UNHEX(user_pass), '${pkey}') user_pass,
+			   first_name,
+			   last_name,
+			   role_name, 
+			   enabled, 
+			   DATE_FORMAT(regist_date, '%Y-%m-%d') regist_date, 
+			   DATE_FORMAT(certification_date, '%Y-%m-%d') certification_date
+		  FROM common.members
+		 WHERE user_id = #{userId}
+	</select>
+</mapper>

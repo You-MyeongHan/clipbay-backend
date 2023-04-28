@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>My Main Page</title>
-    <!-- Add your stylesheet and other scripts here -->
-    <link rel="stylesheet" href="styles.css" />
-    <script src="scripts.js"></script>
-</head>
-<body>
-    <h1 th:text="${pageTitle}">Welcome to my page</h1>
-    <p>Today's date is: <span id="date"></span></p>
-    <button onclick="showMessage()">Click me</button>
-    <p id="message"></p>
-    
-    <!-- Add your Thymeleaf templates and other HTML code here -->
-    
-    <!-- Example of a Thymeleaf template -->
-
-    
-    <!-- Add your JavaScript code here -->
-    <script>
-        // Get the current date and display it
-        var date = new Date();
-        document.getElementById("date").innerHTML = date.toDateString();
-
-        // Show a message when the button is clicked
-        function showMessage() {
-            document.getElementById("message").innerHTML = "Hello, world!";
-        }
-    </script>
-</body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>부트스트랩 템플릿</title>
+     <link rel="stylesheet" type="text/css" href="/css/main.css">
+  </head>
+  <body>
+  	<th:block th:replace="~{common/common_top::layout_header}"></th:block>
+  	
+  	<div class="center">
+	  <main class="container">
+	  	<div class="blank">
+	  	</div>
+	  	<div class="area1">
+	  	  <div class="area1_in">
+	  	  	서비스 이용
+	  	  </div>
+	  	</div>
+	  	<div class="area2">
+		  <div class="area2_in">
+	  	  	팝업
+	  	  </div>
+		</div>
+		<div class="area3">
+		  <div class="area3_in">
+	  	  	기타내용
+	  	  </div>
+		</div>
+	  </main>
+	</div>
+	
+	<footer id="footer"></footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  </body>
 </html>

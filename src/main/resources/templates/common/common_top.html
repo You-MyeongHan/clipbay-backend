@@ -1,0 +1,54 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/common_top.css">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  </head>
+  <body>
+  	<header id="header" th:fragment="layout_header">
+  	  <div class="Wrapper">
+  	    <div class="logo">
+  	  	  <span class="h1 mpReset">
+  	  	    <a href="/">
+  	  	  	  <img src="/images/main_temp.png" class="iePngFix" alt="빅데이터" width="222" height="52">
+  	  	    </a>
+  	  	  </span>
+  	  	  <p class="mpReset about">빅데이터 예측 커뮤니티</p>
+  	    </div>
+  	    <nav id="gnb" class="mpReset">
+    	  <div class="ul1">
+  	  	    <ul class="li1">
+  	  	  	  <li class="li1 sub">메인</li>
+  	  	  	  <li class="li1 sub">게시판</li>
+  	  	  	  <li class="li1 sub">임시</li>
+  	  	  	  <li class="li1 sub">임시</li>
+  	  	  	  <li class="li1 sub">임시</li>
+  	  	  	  <li class="li1 sub">임시</li>
+  	  	    </ul>
+  	  	  </div>
+  	    </nav>
+  	    <div class="logged_info">
+  	  	  <form method="post" action="/" class="li2 mpReset">
+	  	  	<div th:if="${param.error}">
+	          <div class="alert alert-danger">
+	              사용자ID 또는 비밀번호를 확인해 주세요.
+	          </div>
+	        </div>
+  	  	    <input class="iText" type="text" name="user_id" placeholder="아이디">
+  	  	    <input class="iText" type="password" name="password" placeholder="암호">
+  	  	    <span class="keep">
+  	  	  	  <input name="keep_signed" type="checkbox" id="keepA" value="Y">
+  	  	  	  <label for="keepA">자동 로그인</label>
+  	  	    </span>
+  	  	    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  	  	    <input type="hidden" name="redirect_url" value="/">
+  	  	    <button sec:authorize="isAnonymous()" type="submit">로그인</button>
+  	  	    <button sec:authorize="not isAnonymous()" type="submit">로그아웃</button>
+  	  	  </form>
+  	    </div>
+  	  </div>
+    </header>
+  </body>
+</html>

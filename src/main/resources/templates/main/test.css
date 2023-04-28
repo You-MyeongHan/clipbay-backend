@@ -1,0 +1,105 @@
+/* Reset CSS */
+html, body, header, nav, ul, li, a, section, article, aside, h1, h2, p, ul {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* Global Styles */
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #F7F7F7;
+	color: #333333;
+}
+
+a {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #0066CC;
+}
+
+header {
+	background-color: #FFFFFF;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.25);
+	height: 50px;
+}
+
+nav ul {
+	list-style: none;
+}
+
+nav ul li {
+	float: left;
+	padding: 0 10px;
+	line-height: 50px;
+}
+
+nav ul li:first-child {
+	padding-left: 0;
+}
+
+nav ul li:last-child {
+	padding-right: 0;
+}
+
+#main {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 30px 0;
+}
+
+article {
+	background-color: #FFFFFF;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.25);
+	margin-bottom: 20px;
+	padding: 20px;
+}
+
+article h2 {
+	margin-bottom: 10px;
+}
+
+aside {
+	float: right;
+	width: 300px;
+	margin-top: 20px;
+	padding: 20px;
+	background-color: #FFFFFF;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.25);
+}
+
+aside h2 {
+	margin-bottom: 10px;
+}
+
+aside ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+aside ul li {
+	margin-bottom: 5px;
+	line-height: 1.5;
+}
+
+@media screen and (max-width: 960px) {
+	nav ul li {
+		display: inline-block;
+		float: none;
+	}
+	
+	#main {
+		padding: 20px;
+	}
+	
+	aside {
+		float: none;
+		width: 100%;
+	}
+}
