@@ -1,9 +1,9 @@
-package com.homepage.login.dto;
+package com.homepage.user.dto;
 
 import lombok.Data;
 
 @Data
-public class MemberDto {
+public class UserDto {
 	private String userNo;
 	private String userId;
 	private String userPass;
