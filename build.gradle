@@ -30,7 +30,7 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	
-	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok:1.18.26'
 	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
