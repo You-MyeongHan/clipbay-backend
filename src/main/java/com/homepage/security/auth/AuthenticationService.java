@@ -2,12 +2,12 @@ package com.homepage.security.auth;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.homepage.security.JwtService;
 import com.homepage.user.entity.Role;
+import com.homepage.user.entity.User;
 import com.homepage.user.entity.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class AuthenticationService {
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	
-	public Object register(RegisterRequest request) {
+	public AuthenticationResponse register(RegisterRequest request) {
 		
 		var user=User.builder()
 				.firstname(request.getFirstname())
@@ -38,7 +38,7 @@ public class AuthenticationService {
 				.build();
 	}
 
-	public Object authenticate(AuthenticationRequest request) {
+	public AuthenticationResponse authenticate(AuthenticationRequest request) {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(
 					request.getEmail(),
@@ -47,6 +47,7 @@ public class AuthenticationService {
 		);
 		var user=repository.findByEmail(request.getEmail())
 				.orElseThrow();
+		var jwtToken=jwtService.generateToken(user);
 		
 		return AuthenticationResponse.builder()
 				.token(jwtToken)
