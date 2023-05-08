@@ -1,4 +1,4 @@
-package com.homepage.security;
+package com.homepage.security.token;
 
 import java.security.Key;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,11 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-	
-	private static final String SCRET_KEY="6D5A7134743777217A25432A462D4A404E635266556A586E3272357538782F41";
+		
+	@Value("${application.security.jwt.secret-key}")
+	private String secretKey;
+	@Value("${application.security.jwt.expiration}")
+	private long refreshExpiration;
 	
 	public String extractUsername(String token) {
 		return extractClaim(token,Claims::getSubject);
@@ -27,6 +31,27 @@ public class JwtService {
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims= extractAllClaims(token);
 		return claimsResolver.apply(claims);
+	}
+	
+	private String buildToken(
+			Map<String, Object> extraClaims,
+			UserDetails userDetails,
+			long expiration
+	){
+		return Jwts
+		  .builder()
+		  .setClaims(extraClaims)
+		  .setSubject(userDetails.getUsername())
+		  .setIssuedAt(new Date(System.currentTimeMillis()))
+		  .setExpiration(new Date(System.currentTimeMillis()+expiration))
+		  .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+		  .compact();
+	}
+	
+	public String generateRefreshToken(
+		UserDetails userDetails
+			) {
+		return buildToken(new HashMap<>(), userDetails, refreshExpiration);
 	}
 	
 	public String generateToken(UserDetails userDetails) {
@@ -68,7 +93,7 @@ public class JwtService {
 	}
 	
 	private Key getSignInKey() {
-		byte[] keyBytes=Decoders.BASE64.decode(SCRET_KEY);
+		byte[] keyBytes=Decoders.BASE64.decode(secretKey);
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 }
