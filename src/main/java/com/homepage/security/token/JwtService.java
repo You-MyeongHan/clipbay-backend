@@ -21,7 +21,9 @@ public class JwtService {
 		
 	@Value("${application.security.jwt.secret-key}")
 	private String secretKey;
-	@Value("${application.security.jwt.expiration}")
+	@Value("${application.security.jwt.access-token.expiration}")
+	private long accessExpiration;
+	@Value("${application.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
 	
 	public String extractUsername(String token) {
@@ -33,41 +35,27 @@ public class JwtService {
 		return claimsResolver.apply(claims);
 	}
 	
-	private String buildToken(
+	public String generateToken(
 			Map<String, Object> extraClaims,
 			UserDetails userDetails,
 			long expiration
-	){
-		return Jwts
-		  .builder()
-		  .setClaims(extraClaims)
-		  .setSubject(userDetails.getUsername())
-		  .setIssuedAt(new Date(System.currentTimeMillis()))
-		  .setExpiration(new Date(System.currentTimeMillis()+expiration))
-		  .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-		  .compact();
-	}
-	
-	public String generateRefreshToken(
-		UserDetails userDetails
-			) {
-		return buildToken(new HashMap<>(), userDetails, refreshExpiration);
-	}
-	
-	public String generateToken(UserDetails userDetails) {
-		return generateToken(new HashMap<>(), userDetails); 
-	}
-	
-	public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+	) {
 		return  Jwts
 				.builder()
 				.setClaims(extraClaims)
 				.setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+				.setExpiration(new Date(System.currentTimeMillis()+expiration))
 				.signWith(getSignInKey(),SignatureAlgorithm.HS256)
 				.compact();
-				
+	}
+	
+	public String generateRefreshToken(UserDetails userDetails) {
+		return generateToken(new HashMap<>(), userDetails, refreshExpiration);
+	}
+	
+	public String generateAccessToken(UserDetails userDetails) {
+		return generateToken(new HashMap<>(), userDetails, accessExpiration); 
 	}
 	
 	public boolean isTokenValid(String token, UserDetails userDetails) {
