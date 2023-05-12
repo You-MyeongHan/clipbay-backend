@@ -31,33 +31,30 @@ public class AuthenticationService {
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	
-	public AuthenticationResponse register(RegisterRequest request) {
+	public boolean register(RegisterRequest request) {
 		
 		var user=User.builder()
-				.firstname(request.getFirstname())
-				.lastname(request.getLastname())
-				.email(request.getEmail())
+				.uid(request.getUid())
 				.password(passwordEncoder.encode(request.getPassword()))
+				.nickname(request.getNickname())
+				.email(request.getEmail())
+				.emailReceive(request.getEmailReceive())
 				.role(Role.USER)
 				.build();
 		userRepository.save(user);
-		var accessToken=jwtService.generateAccessToken(user);
-		var refreshToken = jwtService.generateRefreshToken(user);
 		
-		return AuthenticationResponse.builder()
-				.accessToken(accessToken)
-				.refreshToken(refreshToken)
-				.build();
+		return true;
 	}
 
 	public AuthenticationResponse authenticate(AuthenticationRequest request) {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(
-					request.getEmail(),
+					request.getUid(),
 					request.getPassword()
 			)
 		);
-		var user=userRepository.findByEmail(request.getEmail())
+		var uid=request.getUid();	
+		var user=userRepository.findByUid(uid)
 				.orElseThrow();
 		var accessToken=jwtService.generateAccessToken(user);
 		var refreshToken = jwtService.generateRefreshToken(user);
@@ -66,6 +63,7 @@ public class AuthenticationService {
 		return AuthenticationResponse.builder()
 				.accessToken(accessToken)
 				.refreshToken(refreshToken)
+				.nickname(user.getNickname())
 				.build();
 	}
 	
@@ -97,15 +95,15 @@ public class AuthenticationService {
 	) throws IOException {
 		final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 	    final String refreshToken;
-	    final String userEmail;
+	    final String uid;
 	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
 	      return;
 	    }
 	    
 	    refreshToken = authHeader.substring(7);
-	    userEmail = jwtService.extractUsername(refreshToken);
-	    if(userEmail!=null) {
-	    	var user= this.userRepository.findByEmail(userEmail).orElseThrow();
+	    uid = jwtService.extractUid(refreshToken);
+	    if(uid!=null) {
+	    	var user= this.userRepository.findByUid(uid).orElseThrow();
 	    	
 	    	if(jwtService.isTokenValid(refreshToken, user)) {
 	    		var accessToken=jwtService.generateAccessToken(user);

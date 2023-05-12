@@ -30,11 +30,11 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-	private String firstname;
-	private String lastname;
-	private String email;
+	private String uid;
 	private String password;
-	
+	private String nickname;
+	private String email;
+	private Boolean emailReceive;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
@@ -65,7 +65,11 @@ public class User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return email;
+		return nickname;
+	}
+	
+	public String getUid() {
+		return uid;
 	}
 
 	@Override

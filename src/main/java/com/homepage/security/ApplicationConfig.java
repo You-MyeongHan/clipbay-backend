@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.homepage.user.entity.UserRepository;
-import com.mysql.cj.x.protobuf.MysqlxSession.AuthenticateContinue;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +23,7 @@ public class ApplicationConfig {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return username->repository.findByEmail(username)
+		return uid->repository.findByUid(uid)
 				.orElseThrow(()->new UsernameNotFoundException("User not found"));
 	}
 	
