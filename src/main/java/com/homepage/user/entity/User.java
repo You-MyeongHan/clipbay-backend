@@ -29,10 +29,10 @@ public class User implements UserDetails{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	private String uid;
-	private String password;
-	private String nickname;
+	private String pwd;
+	private String nick;
 	private String email;
 	private Boolean emailReceive;
 	@Enumerated(EnumType.STRING)
@@ -60,12 +60,12 @@ public class User implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		return password;
+		return pwd;
 	}
 
 	@Override
 	public String getUsername() {
-		return nickname;
+		return nick;
 	}
 	
 	public String getUid() {

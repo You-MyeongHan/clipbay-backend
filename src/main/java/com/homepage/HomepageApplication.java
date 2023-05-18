@@ -15,12 +15,4 @@ public class HomepageApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HomepageApplication.class, args);
 	}
-	
-	@RequestMapping("/")
-	public ModelAndView index() throws Exception {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/main/main.do");
-
-		return mv;
-	}
 }

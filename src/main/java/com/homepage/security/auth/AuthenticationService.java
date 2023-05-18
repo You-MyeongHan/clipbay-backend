@@ -35,8 +35,8 @@ public class AuthenticationService {
 		
 		var user=User.builder()
 				.uid(request.getUid())
-				.password(passwordEncoder.encode(request.getPassword()))
-				.nickname(request.getNickname())
+				.pwd(passwordEncoder.encode(request.getPwd()))
+				.nick(request.getNick())
 				.email(request.getEmail())
 				.emailReceive(request.getEmailReceive())
 				.role(Role.USER)
@@ -50,7 +50,7 @@ public class AuthenticationService {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(
 					request.getUid(),
-					request.getPassword()
+					request.getPwd()
 			)
 		);
 		var uid=request.getUid();	
@@ -63,7 +63,7 @@ public class AuthenticationService {
 		return AuthenticationResponse.builder()
 				.accessToken(accessToken)
 				.refreshToken(refreshToken)
-				.nickname(user.getNickname())
+				.nick(user.getNick())
 				.build();
 	}
 	

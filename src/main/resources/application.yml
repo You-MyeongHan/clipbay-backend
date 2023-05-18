@@ -11,13 +11,13 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3306/finance_data?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
+    url: jdbc:mariadb://127.0.0.1:3306/homepage_data?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
     username: root
     password: 2142   
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show_sql: true
     properties:
       hibernate:
