@@ -3,6 +3,8 @@ package com.homepage.security.auth.controller;
 import java.io.IOException;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,15 @@ public class AuthenticationController {
 			@RequestBody AuthenticationRequest request
 	){
 		return ResponseEntity.ok(service.authenticate(request));
+	}
+	
+	@PostMapping("/logout")
+	public void logout(
+			HttpServletRequest request,
+		    HttpServletResponse respons
+	){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		service.logout(request, respons, auth);
 	}
 	
 	@PostMapping("/refresh-token")

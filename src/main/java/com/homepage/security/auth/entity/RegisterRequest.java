@@ -1,5 +1,7 @@
 package com.homepage.security.auth.entity;
 
+import com.homepage.security.user.entity.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +17,5 @@ public class RegisterRequest {
 	private String nick;
 	private String email;
 	private Boolean emailReceive;
+	private Role role;
 }
