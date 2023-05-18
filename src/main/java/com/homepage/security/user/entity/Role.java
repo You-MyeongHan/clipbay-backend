@@ -1,4 +1,4 @@
-package com.homepage.user.entity;
+package com.homepage.security.user.entity;
 
 public enum Role {
 	USER,

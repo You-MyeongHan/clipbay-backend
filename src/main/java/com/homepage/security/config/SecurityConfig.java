@@ -1,4 +1,4 @@
-package com.homepage.security;
+package com.homepage.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.homepage.security.token.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 

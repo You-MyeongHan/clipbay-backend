@@ -1,9 +1,12 @@
-package com.homepage.user.entity;
+package com.homepage.security.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.homepage.security.user.entity.User;
+import com.homepage.security.user.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService{

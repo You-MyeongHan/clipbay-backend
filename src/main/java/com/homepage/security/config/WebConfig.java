@@ -1,4 +1,4 @@
-package com.homepage.security;
+package com.homepage.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

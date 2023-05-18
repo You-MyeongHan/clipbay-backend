@@ -1,4 +1,4 @@
-package com.homepage.security.token;
+package com.homepage.security.token.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.homepage.security.token.entity.Token;
 
 public interface TokenRepository extends JpaRepository<Token, Integer>{
 	@Query(value="""

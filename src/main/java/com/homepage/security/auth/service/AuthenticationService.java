@@ -1,4 +1,4 @@
-package com.homepage.security.auth;
+package com.homepage.security.auth.service;
 
 import java.io.IOException;
 
@@ -9,13 +9,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.homepage.security.token.JwtService;
-import com.homepage.security.token.Token;
-import com.homepage.security.token.TokenType;
-import com.homepage.security.token.TokenRepository;
-import com.homepage.user.entity.Role;
-import com.homepage.user.entity.User;
-import com.homepage.user.entity.UserRepository;
+import com.homepage.security.auth.entity.AuthenticationRequest;
+import com.homepage.security.auth.entity.AuthenticationResponse;
+import com.homepage.security.auth.entity.RegisterRequest;
+import com.homepage.security.token.entity.Token;
+import com.homepage.security.token.entity.TokenType;
+import com.homepage.security.token.repository.TokenRepository;
+import com.homepage.security.token.service.JwtService;
+import com.homepage.security.user.entity.Role;
+import com.homepage.security.user.entity.User;
+import com.homepage.security.user.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

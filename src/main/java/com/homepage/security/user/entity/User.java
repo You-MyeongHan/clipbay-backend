@@ -1,4 +1,4 @@
-package com.homepage.user.entity;
+package com.homepage.security.user.entity;
 
 import java.util.Collection;
 import java.util.List;

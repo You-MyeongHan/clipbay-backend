@@ -7,7 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.homepage.user.entity.User;
+import com.homepage.security.user.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

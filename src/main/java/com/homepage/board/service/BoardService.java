@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.homepage.board.entity.Board;
 import com.homepage.board.entity.BoardRequest;
-import com.homepage.board.entity.PostResponse;
 import com.homepage.board.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;

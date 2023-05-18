@@ -1,4 +1,4 @@
-package com.homepage.security.token;
+package com.homepage.security.token.service;
 
 import java.security.Key;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.homepage.user.entity.User;
+import com.homepage.security.user.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

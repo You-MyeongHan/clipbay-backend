@@ -1,4 +1,4 @@
-package com.homepage.security.token;
+package com.homepage.security.config;
 
 import java.io.IOException;
 
@@ -9,8 +9,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.homepage.user.entity.User;
-import com.homepage.user.entity.UserService;
+import com.homepage.security.token.repository.TokenRepository;
+import com.homepage.security.token.service.JwtService;
+import com.homepage.security.user.entity.User;
+import com.homepage.security.user.service.UserService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

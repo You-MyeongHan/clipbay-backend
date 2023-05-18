@@ -1,4 +1,4 @@
-package com.homepage.security.auth;
+package com.homepage.security.auth.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class AuthenticationRequest {
 	private String uid;
 	private String pwd;
-	private String nick;
-	private String email;
-	private Boolean emailReceive;
 }

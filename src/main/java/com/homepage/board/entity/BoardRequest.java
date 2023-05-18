@@ -1,6 +1,6 @@
 package com.homepage.board.entity;
 
-import com.homepage.user.entity.User;
+import com.homepage.security.user.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

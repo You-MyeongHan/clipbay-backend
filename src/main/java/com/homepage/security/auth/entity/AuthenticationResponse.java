@@ -1,4 +1,4 @@
-package com.homepage.security.auth;
+package com.homepage.security.auth.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

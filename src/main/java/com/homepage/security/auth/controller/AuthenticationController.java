@@ -1,4 +1,4 @@
-package com.homepage.security.auth;
+package com.homepage.security.auth.controller;
 
 import java.io.IOException;
 
@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.homepage.security.auth.entity.AuthenticationRequest;
+import com.homepage.security.auth.entity.AuthenticationResponse;
+import com.homepage.security.auth.entity.RegisterRequest;
+import com.homepage.security.auth.service.AuthenticationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

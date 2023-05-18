@@ -1,4 +1,4 @@
-package com.homepage.security;
+package com.homepage.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.homepage.user.entity.UserRepository;
+import com.homepage.security.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

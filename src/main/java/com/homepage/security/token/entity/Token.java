@@ -1,6 +1,6 @@
-package com.homepage.security.token;
+package com.homepage.security.token.entity;
 
-import com.homepage.user.entity.User;
+import com.homepage.security.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
