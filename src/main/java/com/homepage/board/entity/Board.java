@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @DynamicInsert
 @Entity
 @Table(name="board")
-@NamedEntityGraph(name = "Board.userWithNickname", attributeNodes = @NamedAttributeNode(value = "user", subgraph = "userNickname"))
+@NamedEntityGraph(name = "Board.userWithNick", attributeNodes = @NamedAttributeNode(value = "user", subgraph = "userNick"))
 public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class Board {
 	@CreationTimestamp
 	private LocalDateTime  wr_date;
 	@UpdateTimestamp
-	private LocalDateTime  up_date;
+	private LocalDateTime  re_date;
 	private LocalDateTime  del_date;
 	@ColumnDefault("0")
 	private int view_cnt;

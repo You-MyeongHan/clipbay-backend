@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -43,35 +45,42 @@ public class User implements UserDetails{
 		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 	
+	@JsonIgnore
 	@Override
     public boolean isAccountNonExpired() {
         return true; // 유효한 계정
     }
 
+	@JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true; // 사용불가(잠금)하지 않은 계정
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true; // 비밀번호가 만료되지 않음
     }
 
+    @JsonIgnore
 	@Override
 	public String getPassword() {
 		return pwd;
 	}
 
+    @JsonIgnore
 	@Override
 	public String getUsername() {
 		return nick;
 	}
 	
+    @JsonIgnore
 	public String getUid() {
 		return uid;
 	}
 
+    @JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub

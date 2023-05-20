@@ -19,6 +19,7 @@ import com.homepage.board.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/board")
@@ -30,9 +31,7 @@ public class BoardController {
 	@GetMapping("/{boardId}")
 	public ResponseEntity<Board> getBoardById(@PathVariable("boardId") Long boardId){
 		var a= boardService.getBoardById(boardId);
-		log.debug("chechpoint1");
-		System.out.println(a);
-		log.debug("chechpoint1");
+		log.info(""+a);
         return ResponseEntity.ok(a);
 	}
 	

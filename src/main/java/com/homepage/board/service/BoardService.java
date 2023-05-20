@@ -9,19 +9,20 @@ import com.homepage.board.entity.Board;
 import com.homepage.board.entity.BoardRequest;
 import com.homepage.board.repository.BoardRepository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 	
 	private final BoardRepository boardRepository;
-	private final EntityManagerFactory emf;
 	
 	public Board getBoardById(Long boardId) {
-		return boardRepository.findWithUserNicknameById(boardId);
+		var a=boardRepository.findWithUserNickById(boardId);
+		log.debug(""+a);
+		return a;
 	}
 	
 	public Page<Board> findAll(Pageable pageable) {

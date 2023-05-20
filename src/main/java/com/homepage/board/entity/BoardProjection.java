@@ -6,5 +6,5 @@ public interface BoardProjection {
     String getCategory();
     String getContent();
     Long getUser_Id();
-    String getUser_Nickname();
+    String getUser_Nick();
 }
