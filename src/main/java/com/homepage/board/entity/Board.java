@@ -16,6 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +31,7 @@ import lombok.NoArgsConstructor;
 @DynamicInsert
 @Entity
 @Table(name="board")
+@NamedEntityGraph(name = "Board.userWithNickname", attributeNodes = @NamedAttributeNode(value = "user", subgraph = "userNickname"))
 public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
