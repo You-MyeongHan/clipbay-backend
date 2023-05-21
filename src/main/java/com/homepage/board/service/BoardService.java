@@ -2,6 +2,7 @@ package com.homepage.board.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +26,18 @@ public class BoardService {
 		return a;
 	}
 	
-	public Page<Board> findAll(Pageable pageable) {
+	public Page<Board> findAll(Pageable pageable, String category) {
+		Specification<Board> spec = null;
+		if(category !=null && !category.isEmpty()) {
+			spec = (root, query, criteriaBuilder) ->
+            criteriaBuilder.equal(root.get("category"), category);
+		}
 		
-		return boardRepository.findAll(pageable);
+		if (spec != null) {
+            return boardRepository.findAll(spec, pageable);
+        } else {
+            return boardRepository.findAll(pageable);
+        }
 	}
 	
 	@Transactional

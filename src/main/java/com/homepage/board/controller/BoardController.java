@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.homepage.board.entity.Board;
@@ -20,7 +21,6 @@ import com.homepage.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
@@ -31,7 +31,6 @@ public class BoardController {
 	@GetMapping("/{boardId}")
 	public ResponseEntity<Board> getBoardById(@PathVariable("boardId") Long boardId){
 		var a= boardService.getBoardById(boardId);
-		log.info(""+a);
         return ResponseEntity.ok(a);
 	}
 	
@@ -43,8 +42,11 @@ public class BoardController {
 	}
 	
 	@GetMapping("/post")
-	public ResponseEntity<Page<PostResponse>> post(@PageableDefault(page=0, size = 20, sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable){
-		Page<PostResponse> boards = boardService.findAll(pageable).map(PostResponse::from);
+	public ResponseEntity<Page<PostResponse>> post(
+			@PageableDefault(page=0, size = 20, sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "category", defaultValue  = "humor") String category){
+		
+		Page<PostResponse> boards = boardService.findAll(pageable, category).map(PostResponse::from);
         return ResponseEntity.ok(boards);
 	}
 }

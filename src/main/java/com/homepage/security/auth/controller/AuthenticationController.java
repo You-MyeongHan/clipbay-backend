@@ -43,10 +43,10 @@ public class AuthenticationController {
 	@PostMapping("/logout")
 	public void logout(
 			HttpServletRequest request,
-		    HttpServletResponse respons
+		    HttpServletResponse response
 	){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		service.logout(request, respons, auth);
+		service.logout(request, response, auth);
 	}
 	
 	@PostMapping("/refresh-token")
