@@ -11,9 +11,7 @@ import com.homepage.board.entity.BoardRequest;
 import com.homepage.board.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -21,9 +19,10 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	
 	public Board getBoardById(Long boardId) {
-		var a=boardRepository.findWithUserNickById(boardId); 
-		log.debug(""+a);
-		return a;
+		var board=boardRepository.findWithUserNickById(boardId); 
+		board.setView_cnt(board.getView_cnt()+1);
+		
+		return boardRepository.save(board);
 	}
 	
 	public Page<Board> findAll(Pageable pageable, String category) {

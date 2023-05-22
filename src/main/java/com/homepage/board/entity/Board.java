@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.homepage.security.user.entity.User;
 
@@ -30,6 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name="board")
 @NamedEntityGraph(name = "Board.userWithNick", attributeNodes = @NamedAttributeNode(value = "user", subgraph = "userNick"))
@@ -42,7 +43,6 @@ public class Board {
 	private String content;
 	@CreationTimestamp
 	private LocalDateTime  wr_date;
-	@UpdateTimestamp
 	private LocalDateTime  re_date;
 	private LocalDateTime  del_date;
 	@ColumnDefault("0")

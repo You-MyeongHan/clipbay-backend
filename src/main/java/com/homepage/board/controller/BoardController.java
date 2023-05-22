@@ -30,12 +30,6 @@ public class BoardController {
 	@GetMapping("/{boardId}")
 	public ResponseEntity<Board> getBoardById(@PathVariable("boardId") Long boardId){
 		Board board= boardService.getBoardById(boardId);
-		Integer newVisit=board.getView_cnt()+1;
-		
-		Board board_=Board.builder()
-				.view_cnt(newVisit)
-				.build();
-		boardService.updateView_cnt(boardId, board_);
 		
         return ResponseEntity.ok(board);
 	}
