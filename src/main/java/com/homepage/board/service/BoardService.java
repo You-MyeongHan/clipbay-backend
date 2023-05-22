@@ -21,7 +21,7 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	
 	public Board getBoardById(Long boardId) {
-		var a=boardRepository.findWithUserNickById(boardId);
+		var a=boardRepository.findWithUserNickById(boardId); 
 		log.debug(""+a);
 		return a;
 	}
@@ -52,5 +52,13 @@ public class BoardService {
 		boardRepository.save(board);
 		
 		return true;
+	}
+	
+	@Transactional
+	public void updateView_cnt(Long boardId, Board board) {
+		Board board1=boardRepository.findById(boardId).orElseThrow(()->
+			new IllegalStateException("게시물이 존재하지 않습니다."));
+		
+		board.updateViewCnt(board1.getView_cnt());
 	}
 }

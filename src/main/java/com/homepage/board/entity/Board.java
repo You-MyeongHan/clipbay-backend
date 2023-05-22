@@ -19,6 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,10 +46,15 @@ public class Board {
 	private LocalDateTime  re_date;
 	private LocalDateTime  del_date;
 	@ColumnDefault("0")
-	private int view_cnt;
+	private Integer view_cnt;
 	@ColumnDefault("0")
 	private int recommend;
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+	@Version
+    private int version;
+	public void updateViewCnt(Integer visit) {
+		this.view_cnt=visit;
+	}
 }

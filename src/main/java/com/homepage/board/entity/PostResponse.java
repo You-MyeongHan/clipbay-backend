@@ -14,7 +14,7 @@ public class PostResponse {
 	private final String title;
 //	private final String nick;
 	private final LocalDateTime wr_date;
-	private final int view_cnt;
+	private final Integer view_cnt;
 	private final int recommend;
 	
 	public static PostResponse from(Board board) {

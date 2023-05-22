@@ -19,7 +19,6 @@ import com.homepage.board.entity.PostResponse;
 import com.homepage.board.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/board")
@@ -30,8 +29,15 @@ public class BoardController {
 	
 	@GetMapping("/{boardId}")
 	public ResponseEntity<Board> getBoardById(@PathVariable("boardId") Long boardId){
-		var a= boardService.getBoardById(boardId);
-        return ResponseEntity.ok(a);
+		Board board= boardService.getBoardById(boardId);
+		Integer newVisit=board.getView_cnt()+1;
+		
+		Board board_=Board.builder()
+				.view_cnt(newVisit)
+				.build();
+		boardService.updateView_cnt(boardId, board_);
+		
+        return ResponseEntity.ok(board);
 	}
 	
 	@PostMapping("/register")
@@ -44,9 +50,8 @@ public class BoardController {
 	@GetMapping("/post")
 	public ResponseEntity<Page<PostResponse>> post(
 			@PageableDefault(page=0, size = 20, sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "category", defaultValue  = "humor") String category){
-		
-		Page<PostResponse> boards = boardService.findAll(pageable, category).map(PostResponse::from);
-        return ResponseEntity.ok(boards);
+			@RequestParam(value = "category", defaultValue  = "humor") String group){
+		Page<PostResponse> boards = boardService.findAll(pageable, group).map(PostResponse::from);
+		return ResponseEntity.ok(boards);
 	}
 }
