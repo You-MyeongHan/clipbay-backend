@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.homepage.board.entity.Board;
 import com.homepage.board.entity.BoardRequest;
 import com.homepage.board.repository.BoardRepository;
+import com.homepage.security.user.entity.User;
+import com.homepage.security.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 	
 	private final BoardRepository boardRepository;
+	private final UserRepository userRepository;
 	
+	@Transactional
 	public Board getBoardById(Long boardId) {
 		var board=boardRepository.findWithUserNickById(boardId); 
 		board.setView_cnt(board.getView_cnt()+1);
@@ -59,5 +63,25 @@ public class BoardService {
 			new IllegalStateException("게시물이 존재하지 않습니다."));
 		
 		board.updateViewCnt(board1.getView_cnt());
+	}
+	
+	public Boolean recommendBoard(Long userId, Long boardId) {
+		
+		Board board = boardRepository.findById(boardId).orElse(null);
+		if(board!=null) {
+			User user=userRepository.findById(userId).orElse(null);
+			if(user!=null) {
+				if(board.getRecommendations().contains(user)) {
+					return false;
+				}
+				
+				board.setRecommend(board.getRecommend()+1);
+				board.getRecommendations().add(user);
+				boardRepository.save(board);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

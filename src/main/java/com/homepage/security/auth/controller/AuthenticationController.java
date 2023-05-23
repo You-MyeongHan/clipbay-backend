@@ -5,9 +5,11 @@ import java.io.IOException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.homepage.security.auth.entity.AuthenticationRequest;
@@ -24,20 +26,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationController {
 	
-	private final AuthenticationService service;
+	private final AuthenticationService userService;
 	
 	@PostMapping("/register")
 	public ResponseEntity<Boolean> register(
 			@RequestBody RegisterRequest request
 	){
-		return ResponseEntity.ok(service.register(request));
+		return ResponseEntity.ok(userService.register(request));
 	}
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthenticationResponse> authenticate(
 			@RequestBody AuthenticationRequest request
 	){
-		return ResponseEntity.ok(service.authenticate(request));
+		return ResponseEntity.ok(userService.authenticate(request));
 	}
 	
 	@PostMapping("/logout")
@@ -46,7 +48,19 @@ public class AuthenticationController {
 		    HttpServletResponse response
 	){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		service.logout(request, response, auth);
+		userService.logout(request, response, auth);
+	}
+	
+	@GetMapping("/checkUid")
+	public ResponseEntity<?> checkUidDuplication(
+			@RequestParam(value="uid") String uid){
+		return ResponseEntity.ok(userService.existsByUid(uid));
+	}
+	
+	@GetMapping("/checkEmail")
+	public ResponseEntity<?> checkEmailDuplication(
+			@RequestParam(value="email") String email){
+		return ResponseEntity.ok(userService.existsByEmail(email));
 	}
 	
 	@PostMapping("/refresh-token")
@@ -54,6 +68,6 @@ public class AuthenticationController {
 	      HttpServletRequest request,
 	      HttpServletResponse response
 	  ) throws IOException {
-	    service.refreshToken(request, response);
+		userService.refreshToken(request, response);
 	  }
 }

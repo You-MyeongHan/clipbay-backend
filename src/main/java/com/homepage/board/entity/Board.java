@@ -1,6 +1,8 @@
 package com.homepage.board.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +17,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
@@ -48,7 +52,7 @@ public class Board {
 	@ColumnDefault("0")
 	private Integer view_cnt;
 	@ColumnDefault("0")
-	private int recommend;
+	private Integer recommend;
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -57,4 +61,12 @@ public class Board {
 	public void updateViewCnt(Integer visit) {
 		this.view_cnt=visit;
 	}
+	
+	@ManyToMany
+	@JoinTable(
+		name="board_user_recommendation",
+		joinColumns=@JoinColumn(name="board_id"),
+		inverseJoinColumns=@JoinColumn(name="user_id")
+	)
+	private Set<User> recommendations=new HashSet<>();
 }

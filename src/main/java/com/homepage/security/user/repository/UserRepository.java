@@ -9,4 +9,7 @@ import com.homepage.security.user.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
     public Optional<User> findByUid(String uid);
+    public Optional<User> findById(Long id);
+    public boolean existsByUid(String uid);
+    public boolean existsByEmail(String email);
 }

@@ -95,6 +95,14 @@ public class AuthenticationService implements LogoutHandler{
 	    }
 	}
 	
+	public boolean existsByUid(String uid){
+		return !userRepository.existsByUid(uid);
+	}
+	
+	public boolean existsByEmail(String email){
+		return !userRepository.existsByEmail(email);
+	}
+	
 	private void saveUserToken(User user, String jwtToken) {
 	    var token = Token.builder()
 	        .user(user)

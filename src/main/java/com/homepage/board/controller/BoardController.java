@@ -48,4 +48,12 @@ public class BoardController {
 		Page<PostResponse> boards = boardService.findAll(pageable, group).map(PostResponse::from);
 		return ResponseEntity.ok(boards);
 	}
+	
+	@GetMapping("/recommendBoard")
+	public ResponseEntity<Boolean> recommendBoard(
+			@RequestParam(value="userId") Long userId,
+			@RequestParam(value="boardId") Long boardId){
+		return ResponseEntity.ok(boardService.recommendBoard(userId, boardId));
+	}
+	
 }
