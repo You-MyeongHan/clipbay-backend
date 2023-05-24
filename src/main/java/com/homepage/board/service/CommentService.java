@@ -34,4 +34,11 @@ public class CommentService {
     public List<Comment> findByBoard(Board board){
     	return commentRepository.findByBoard(board);
     }
+    
+    @Transactional
+    public void deleteComment(Long commentId) {
+    	Comment comment=commentRepository.findById(commentId)
+    			.orElseThrow(()-> new IllegalArgumentException("Comment not found with ID: " + commentId));
+    	commentRepository.delete(comment);
+    }
 }
