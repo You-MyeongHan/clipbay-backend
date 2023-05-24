@@ -31,13 +31,17 @@ public class User implements UserDetails{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
     private Long id;
 	private String uid;
+	@JsonIgnore
 	private String pwd;
 	private String nick;
 	private String email;
+	@JsonIgnore
 	private Boolean emailReceive;
 	@Enumerated(EnumType.STRING)
+	@JsonIgnore
 	private Role role;
 	
 	@Override

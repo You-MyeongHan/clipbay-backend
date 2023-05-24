@@ -1,5 +1,7 @@
 package com.homepage.board.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.homepage.board.entity.Board;
 import com.homepage.board.entity.BoardRequest;
+import com.homepage.board.entity.Comment;
 import com.homepage.board.entity.PostResponse;
 import com.homepage.board.service.BoardService;
+import com.homepage.board.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,12 +30,12 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 
 	private final BoardService boardService;
+	private final CommentService commentService;
 	
 	@GetMapping("/{boardId}")
 	public ResponseEntity<Board> getBoardById(@PathVariable("boardId") Long boardId){
 		Board board= boardService.getBoardById(boardId);
-		
-        return ResponseEntity.ok(board);
+	    return ResponseEntity.ok(board);
 	}
 	
 	@PostMapping("/register")
@@ -54,6 +58,18 @@ public class BoardController {
 			@RequestParam(value="userId") Long userId,
 			@RequestParam(value="boardId") Long boardId){
 		return ResponseEntity.ok(boardService.recommendBoard(userId, boardId));
+	}
+	
+	@PostMapping("/{boardId}/comment")
+	public ResponseEntity<Boolean> addCommentToBoard(
+			@PathVariable Long boardId,
+			@RequestBody String content){
+		Comment comment = commentService.addCommentToBoard(boardId, content);
+        if (comment != null) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.homepage.board.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -9,8 +10,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.homepage.security.user.entity.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +26,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
@@ -38,6 +44,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="board")
 @NamedEntityGraph(name = "Board.userWithNick", attributeNodes = @NamedAttributeNode(value = "user", subgraph = "userNick"))
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,4 +76,8 @@ public class Board {
 		inverseJoinColumns=@JoinColumn(name="user_id")
 	)
 	private Set<User> recommendations=new HashSet<>();
+	
+	@OneToMany(mappedBy="board", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("id asc")
+	private List<Comment> comments;
 }

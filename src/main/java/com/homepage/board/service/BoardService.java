@@ -1,5 +1,7 @@
 package com.homepage.board.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -8,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.homepage.board.entity.Board;
 import com.homepage.board.entity.BoardRequest;
+import com.homepage.board.entity.Comment;
 import com.homepage.board.repository.BoardRepository;
+import com.homepage.board.repository.CommentRepository;
 import com.homepage.security.user.entity.User;
 import com.homepage.security.user.repository.UserRepository;
 
@@ -20,13 +24,23 @@ public class BoardService {
 	
 	private final BoardRepository boardRepository;
 	private final UserRepository userRepository;
+	private final CommentRepository commentRepository;
+	
 	
 	@Transactional
 	public Board getBoardById(Long boardId) {
-		var board=boardRepository.findWithUserNickById(boardId); 
-		board.setView_cnt(board.getView_cnt()+1);
-		
-		return boardRepository.save(board);
+		Board board=boardRepository.findWithUserNickById(boardId);
+		if(board!=null) {
+			board.setView_cnt(board.getView_cnt()+1);
+			board=boardRepository.save(board);
+//			
+//			List<Comment> comments = commentRepository.findByBoard(board);
+//	        board.setComments(comments);
+
+	        return board;
+		}
+		return null;
+        
 	}
 	
 	public Page<Board> findAll(Pageable pageable, String category) {

@@ -8,7 +8,5 @@ import com.homepage.board.entity.Board;
 
 public interface BoardRepository extends JpaRepository<Board, Long>,JpaSpecificationExecutor<Board>{
 	@EntityGraph(value = "Board.userWithNick", type = EntityGraph.EntityGraphType.FETCH)
-    Board findWithUserNickById(Long id);
-	
-	
+    Board findWithUserNickById(Long boardId);	
 }
