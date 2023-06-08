@@ -30,6 +30,7 @@ public class BoardService {
 	@Transactional
 	public Board getBoardById(Long boardId) {
 		Board board=boardRepository.findWithUserNickById(boardId);
+		
 		if(board!=null) {
 			board.setViewCnt(board.getViewCnt()+1);
 			board=boardRepository.save(board);

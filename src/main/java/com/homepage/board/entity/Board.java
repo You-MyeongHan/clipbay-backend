@@ -80,6 +80,6 @@ public class Board {
 	private Set<User> recommendations=new HashSet<>();
 	
 	@OneToMany(mappedBy="board", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy("id asc")
+	@OrderBy("wr_date desc")
 	private List<Comment> comments;
 }
