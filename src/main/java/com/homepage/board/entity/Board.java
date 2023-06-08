@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.homepage.security.user.entity.User;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -57,7 +58,8 @@ public class Board {
 	private LocalDateTime  re_date;
 	private LocalDateTime  del_date;
 	@ColumnDefault("0")
-	private Integer view_cnt;
+	@Column(name="view_cnt")
+	private Integer viewCnt;
 	@ColumnDefault("0")
 	private Integer recommend;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -66,7 +68,7 @@ public class Board {
 	@Version
     private int version;
 	public void updateViewCnt(Integer visit) {
-		this.view_cnt=visit;
+		this.viewCnt=visit;
 	}
 	
 	@ManyToMany

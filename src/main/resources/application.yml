@@ -1,19 +1,19 @@
-#spring.devtools.livereload.enabled=true
-
-#spring.thymeleaf.prefix=classpath:/templates/
-#spring.thymeleaf.suffix=.html
-#spring.thymeleaf.check-template-location=true
-#spring.thymeleaf.cache=false
-
 server:
-  port: 8000
+  port: 8080
 
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3306/homepage_data?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
-    username: root
-    password: 2142   
+#    url: jdbc:mariadb://homepage-db.cntqfwa9yueu.ap-northeast-2.rds.amazonaws.com:3306/homepage?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
+    url: jdbc:mariadb://127.0.0.1:3306/homepage?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
+#    username: admin
+#    password: McdTmOSakRPP4w2zMdPz
+    username: root   
+    password: 2142
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   jpa:
     hibernate:
@@ -37,3 +37,6 @@ application:
         expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+  post:
+    best-post:
+      viewCnt: 3

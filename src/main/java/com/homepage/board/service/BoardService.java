@@ -31,7 +31,7 @@ public class BoardService {
 	public Board getBoardById(Long boardId) {
 		Board board=boardRepository.findWithUserNickById(boardId);
 		if(board!=null) {
-			board.setView_cnt(board.getView_cnt()+1);
+			board.setViewCnt(board.getViewCnt()+1);
 			board=boardRepository.save(board);
 //			
 //			List<Comment> comments = commentRepository.findByBoard(board);
@@ -57,6 +57,16 @@ public class BoardService {
         }
 	}
 	
+	public Page<Board> findByView_cntGreaterThan(Integer viewCount, Pageable pageable){
+		return boardRepository.findByViewCntGreaterThan(viewCount, pageable);
+	}
+	
+	public Page<Board> findByTitleContaining(Pageable pageable, String searchKeyword){
+		return boardRepository.findByTitleContaining(pageable, searchKeyword);
+	}
+	
+	
+	
 	@Transactional
 	public boolean register(BoardRequest request) {
 		
@@ -76,7 +86,7 @@ public class BoardService {
 		Board board1=boardRepository.findById(boardId).orElseThrow(()->
 			new IllegalStateException("게시물이 존재하지 않습니다."));
 		
-		board.updateViewCnt(board1.getView_cnt());
+		board.updateViewCnt(board1.getViewCnt());
 	}
 	
 	public Boolean recommendBoard(Long userId, Long boardId) {

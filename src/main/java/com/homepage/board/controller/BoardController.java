@@ -1,5 +1,6 @@
 package com.homepage.board.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,8 @@ public class BoardController {
 
 	private final BoardService boardService;
 	private final CommentService commentService;
+	@Value("${application.post.best-post.viewCnt}")
+	private Integer viewCount;
 	
 	@GetMapping("/{boardId}")
 	public ResponseEntity<Board> getBoardById(@PathVariable("boardId") Long boardId){
@@ -46,12 +49,29 @@ public class BoardController {
 	
 	@GetMapping("/post")
 	public ResponseEntity<Page<PostResponse>> post(
-			@PageableDefault(page=0, size = 20, sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "category", defaultValue  = "humor") String group){
-		Page<PostResponse> boards = boardService.findAll(pageable, group).map(PostResponse::from);
+			@PageableDefault(page=0, size = 20, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "category", defaultValue  = "humor") String group,
+			@RequestParam(value = "searchKeyword", defaultValue  = "") String searchKeyword){
+		Page<PostResponse> boards =null;
+		if(searchKeyword==null) {
+			 boards = boardService.findAll(pageable, group).map(PostResponse::from);
+		}else {
+			 boards = boardService.findByTitleContaining(pageable, searchKeyword).map(PostResponse::from);
+		}
+		
 		return ResponseEntity.ok(boards);
 	}
 	
+	@GetMapping("/best-post")
+	public ResponseEntity<Page<PostResponse>> bestPost(
+			@PageableDefault(page=0, size = 20, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
+		
+		Page<PostResponse> boards =null;
+		boards = boardService.findByView_cntGreaterThan(viewCount, pageable).map(PostResponse::from);
+		return ResponseEntity.ok(boards);
+	}
+
+
 	@GetMapping("/recommendBoard")
 	public ResponseEntity<Boolean> recommendBoard(
 			@RequestParam(value="userId") Long userId,
@@ -76,5 +96,8 @@ public class BoardController {
 		commentService.deleteComment(commentId);
 		return ResponseEntity.noContent().build();
 	}
+	
+//	@GetMapping("/search")
+//	public ResponseEntity<T> 
 	
 }

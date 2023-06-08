@@ -25,7 +25,7 @@ public class PostResponse {
 		this.title=board.getTitle();
 //		this.nick=board.getNick();
 		this.wr_date=board.getWr_date();
-		this.view_cnt=board.getView_cnt();
+		this.view_cnt=board.getViewCnt();
 		this.recommend=board.getRecommend();
 	}
 }

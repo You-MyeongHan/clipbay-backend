@@ -17,7 +17,9 @@ public class WebConfig implements WebMvcConfigurer{
                 HttpMethod.POST.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name()
-                );
+                )
+		.allowCredentials(true)
+		.maxAge(3000);
 		
 	}
 }

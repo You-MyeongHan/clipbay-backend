@@ -1,6 +1,7 @@
 package com.homepage.security.token.service;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.homepage.security.token.entity.RedisDao;
 import com.homepage.security.user.entity.User;
 
 import io.jsonwebtoken.Claims;
@@ -16,8 +18,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 		
 	@Value("${application.security.jwt.secret-key}")
@@ -26,6 +30,7 @@ public class JwtService {
 	private long accessExpiration;
 	@Value("${application.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
+	private final RedisDao redisDao;
 	
 	public String extractUid(String token) {
 		return extractClaim(token,Claims::getSubject);
@@ -44,7 +49,7 @@ public class JwtService {
 		return  Jwts
 				.builder()
 				.setClaims(extraClaims)
-				.setSubject(user.getUid())
+				.setSubject(user.getId().toString())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis()+expiration))
 				.signWith(getSignInKey(),SignatureAlgorithm.HS256)
@@ -52,11 +57,19 @@ public class JwtService {
 	}
 	
 	public String generateRefreshToken(User user) {
-		return generateToken(new HashMap<>(), user, refreshExpiration);
+		HashMap<String, Object> map = new HashMap<>() {{
+			put("nick", user.getNick());
+		}};
+		String refreshToken=generateToken(map, user, refreshExpiration);
+		redisDao.setValues(user.getId().toString(), refreshToken, Duration.ofMillis(accessExpiration));
+		return refreshToken;
 	}
 	
 	public String generateAccessToken(User user) {
-		return generateToken(new HashMap<>(), user, accessExpiration); 
+		HashMap<String, Object> map = new HashMap<>() {{
+			put("nick", user.getNick());
+		}};
+		return generateToken(map, user, accessExpiration); 
 	}
 	
 	public boolean isTokenValid(String token, User user) {

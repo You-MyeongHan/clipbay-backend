@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -58,18 +59,15 @@ public class AuthenticationService implements LogoutHandler{
 					request.getUid(),
 					request.getPwd()
 			)
-		);
-		var uid=request.getUid();	
-		var user=userRepository.findByUid(uid)
+		);	
+		var user=userRepository.findByUid(request.getUid())
 				.orElseThrow();
 		var accessToken=jwtService.generateAccessToken(user);
 		var refreshToken = jwtService.generateRefreshToken(user);
-		saveUserToken(user, refreshToken);
 		
 		return AuthenticationResponse.builder()
 				.accessToken(accessToken)
 				.refreshToken(refreshToken)
-				.nick(user.getNick())
 				.build();
 	}
 	
@@ -101,17 +99,6 @@ public class AuthenticationService implements LogoutHandler{
 	
 	public boolean existsByEmail(String email){
 		return !userRepository.existsByEmail(email);
-	}
-	
-	private void saveUserToken(User user, String jwtToken) {
-	    var token = Token.builder()
-	        .user(user)
-	        .token(jwtToken)
-	        .tokenType(TokenType.BEARER)
-	        .expired(false)
-	        .revoked(false)
-	        .build();
-	    tokenRepository.save(token);
 	}
 	 
 	private void revokeAllUserTokens(User user) {
