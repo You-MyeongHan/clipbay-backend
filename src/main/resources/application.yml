@@ -12,6 +12,7 @@ spring:
     password: 2142
   data:
     redis:
+#      host: homepage-redis.soh2fp.ng.0001.apn2.cache.amazonaws.com
       host: localhost
       port: 6379
 
