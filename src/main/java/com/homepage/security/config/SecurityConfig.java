@@ -27,6 +27,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests()
 			.requestMatchers("/api/auth/**").permitAll()
 			.requestMatchers("/api/board/**").permitAll()
+			.requestMatchers("/api/barter/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.sessionManagement()
