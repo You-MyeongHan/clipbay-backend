@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://backend-server.cntqfwa9yueu.ap-northeast-2.rds.amazonaws.com.com:3306/homepage?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
+    url: jdbc:mariadb://backend-server.cntqfwa9yueu.ap-northeast-2.rds.amazonaws.com:3306/homepage?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
 #    url: jdbc:mariadb://127.0.0.1:3306/homepage?&serverTimezone=UTC&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
     username: admin
     password: wwlJqkByFoUKu8YC7ceZ
